@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>angela hon — student, builder, singapore</title>
+<meta name="description" content="angela hon. 16, singapore. i build things for the internet - exam dashboard, the big back club, and whatever is next.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#FAF5EF;
+  --ink:#3B2925;
+  --tan:#C9A87C;
+  --blush:#E8CFC7;
+  --sage:#A8B09A;
+  --pink:#DFAF9F;
+  --pink-deep:#7C2D2D;
+  --card:#FFFDF9;
+  --line:rgba(74,63,53,.14);
+  --r-lg:28px;
+  --pad:clamp(20px,5vw,72px);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--cream);
+  color:var(--ink);
+  font-family:"Fraunces",Georgia,serif;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+::selection{background:var(--pink);color:#fff}
+img{display:block;max-width:100%}
+a{color:inherit}
+
+/* ---------- custom cursor ---------- */
+.cursor-dot,.cursor-ring{position:fixed;top:0;left:0;pointer-events:none;z-index:9999;border-radius:50%;transform:translate(-50%,-50%)}
+.cursor-dot{width:8px;height:8px;background:var(--pink-deep)}
+.cursor-ring{width:34px;height:34px;border:1.5px solid var(--pink-deep);opacity:.55;transition:width .25s,height .25s,opacity .25s}
+body.link-hover .cursor-ring{width:56px;height:56px;opacity:.9}
+@media (pointer:coarse){.cursor-dot,.cursor-ring{display:none}}
+@media (pointer:coarse){body{cursor:auto}}
+@media (pointer:fine){body,a,button{cursor:none}}
+
+/* ---------- type helpers ---------- */
+.script{font-family:"Caveat",cursive;font-weight:600}
+.display{font-weight:800;letter-spacing:-.01em;line-height:.95;text-transform:uppercase;font-variation-settings:"opsz" 144}
+.eyebrow{font-size:12px;letter-spacing:.28em;text-transform:uppercase;font-weight:600;opacity:.65}
+
+/* ---------- doodles ---------- */
+.doodle{position:absolute;pointer-events:none;z-index:1}
+.doodle svg{display:block;width:100%;height:100%;overflow:visible}
+.spin-slow{animation:spin 14s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.floaty{animation:floaty 5s ease-in-out infinite}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+
+/* ---------- nav ---------- */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:18px var(--pad);
+  mix-blend-mode:multiply;
+}
+nav .logo{font-weight:800;text-transform:lowercase;letter-spacing:-.02em;font-size:18px}
+nav .logo span{color:var(--pink-deep)}
+nav .links{display:flex;gap:22px;font-size:13px;font-weight:600;text-transform:lowercase}
+nav .links a{text-decoration:none;position:relative}
+nav .links a::after{content:"";position:absolute;left:0;bottom:-4px;width:0;height:2px;background:var(--pink-deep);transition:width .25s}
+nav .links a:hover::after{width:100%}
+@media (max-width:640px){
+  nav .links{display:none}
+  section{padding:78px var(--pad)}
+  .car-nav{margin-top:2px}
+}
+
+/* ---------- hero ---------- */
+.hero{
+  min-height:100svh;position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:center;
+  padding:120px var(--pad) 190px;
+}
+.blob{position:absolute;border-radius:50%;filter:blur(2px);z-index:0}
+.blob-1{width:44vmin;height:44vmin;background:var(--pink);opacity:.5;top:6%;right:-8%}
+.blob-2{width:30vmin;height:30vmin;background:var(--blush);opacity:.8;bottom:16%;left:-6%}
+.blob-3{width:16vmin;height:16vmin;background:var(--sage);opacity:.4;top:12%;left:34%}
+.hero-inner{position:relative;z-index:2}
+.hero .script-hello{font-size:clamp(28px,4.4vw,52px);color:var(--pink-deep);transform:rotate(-3deg);display:inline-block}
+.hero h1{
+  font-size:clamp(64px,14.5vw,196px);
+  color:var(--ink);
+  margin:6px 0 0;
+}
+.hero h1 .pink{color:var(--pink-deep)}
+.hero-sub{
+  margin-top:26px;display:flex;flex-wrap:wrap;gap:14px 34px;align-items:baseline;
+  font-size:clamp(16px,2vw,22px);font-weight:500;max-width:760px;
+}
+.hero-sub .tag{border:1.5px solid var(--ink);border-radius:999px;padding:6px 18px;font-size:14px;font-weight:600;background:var(--card)}
+.hero .scroll-hint{position:absolute;bottom:84px;left:var(--pad);font-size:12px;letter-spacing:.25em;text-transform:uppercase;opacity:.6;z-index:2}
+
+/* ---------- paper grain ---------- */
+.grain{
+  position:fixed;inset:0;pointer-events:none;z-index:2000;
+  opacity:.07;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---------- marquee ---------- */
+.marquee{
+  position:absolute;bottom:0;left:-2%;z-index:5;
+  background:var(--pink-deep);color:#fff;
+  transform:rotate(-1.2deg);width:104%;margin-left:-2%;
+  padding:14px 0;overflow:hidden;white-space:nowrap;
+  border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);
+}
+.marquee .track{display:inline-block;animation:marq 22s linear infinite}
+.marquee span{font-weight:700;text-transform:uppercase;letter-spacing:.12em;font-size:15px;margin:0 18px}
+.marquee .heart{font-size:13px}
+@keyframes marq{to{transform:translateX(-50%)}}
+
+/* ---------- sections ---------- */
+section{padding:110px var(--pad);position:relative}
+.sec-head{margin-bottom:56px}
+.sec-head .script{font-size:clamp(26px,3.6vw,44px);color:var(--pink-deep);transform:rotate(-2deg);display:inline-block}
+.sec-head h2{font-size:clamp(44px,7vw,96px)}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(34px);transition:opacity .8s cubic-bezier(.2,.65,.3,1),transform .8s cubic-bezier(.2,.65,.3,1);transition-delay:var(--d,0s)}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  .reveal{opacity:1;transform:none;transition:none}
+  .marquee .track,.spin-slow,.floaty{animation:none}
+  html{scroll-behavior:auto}
+}
+
+/* ---------- about ---------- */
+.about-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:clamp(28px,5vw,80px);align-items:start}
+@media (max-width:820px){.about-grid{grid-template-columns:1fr}}
+.about-copy p{font-size:clamp(19px,2.3vw,27px);line-height:1.5;font-weight:500;margin-bottom:1.1em}
+.about-copy .hl{background:linear-gradient(transparent 62%,var(--blush) 62%);padding:0 2px}
+.about-copy .script{color:var(--pink-deep);font-size:1.25em}
+.about-card{
+  background:var(--card);border:2px solid var(--ink);border-radius:var(--r-lg);
+  padding:30px;transform:rotate(2deg);position:relative;
+  box-shadow:10px 10px 0 var(--blush);
+}
+.about-card h3{font-size:13px;letter-spacing:.22em;text-transform:uppercase;margin-bottom:18px}
+.about-card ul{list-style:none}
+.about-card li{display:flex;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px dashed var(--line);font-size:15px}
+.about-card li:last-child{border-bottom:none}
+.about-card li b{font-weight:700}
+.about-card li span{opacity:.7;text-align:right}
+.about-card .tape{
+  position:absolute;top:-16px;left:50%;transform:translateX(-50%) rotate(-3deg);
+  width:110px;height:30px;background:var(--tan);opacity:.75;border-radius:2px;
+}
+
+.about-side{display:flex;flex-direction:column;gap:34px;align-items:center}
+.polaroid{
+  position:relative;
+  background:#fff;border:2px solid var(--ink);border-radius:8px;
+  padding:14px 14px 12px;transform:rotate(-2.5deg);
+  box-shadow:8px 8px 0 var(--blush);max-width:340px;width:100%;
+}
+.polaroid img{border-radius:4px;border:1.5px solid var(--line)}
+.polaroid .clip{position:absolute;top:-20px;right:26px;width:22px;height:46px;transform:rotate(14deg)}
+.polaroid figcaption{text-align:center;font-size:24px;color:var(--pink-deep);margin-top:8px}
+
+/* ---------- projects / carousel ---------- */
+.projects{background:var(--blush);border-top:2px solid var(--ink);border-bottom:2px solid var(--ink)}
+.projects .sec-head h2{color:var(--ink)}
+.carousel{position:relative}
+.car-track{
+  display:flex;gap:clamp(18px,3vw,36px);
+  overflow-x:auto;scroll-snap-type:x mandatory;
+  padding:6px 2px 26px;scrollbar-width:none;
+}
+.car-track::-webkit-scrollbar{display:none}
+.car-card{
+  scroll-snap-align:center;flex:0 0 min(78vw,760px);
+  background:var(--card);border:2px solid var(--ink);border-radius:var(--r-lg);
+  overflow:hidden;display:flex;flex-direction:column;
+  transition:transform .35s cubic-bezier(.2,.65,.3,1);
+}
+.car-card:hover{transform:translateY(-6px) rotate(-.4deg)}
+.car-card .shot{border-bottom:2px solid var(--ink);overflow:hidden;background:#1e2430}
+.car-card .shot img{width:100%;height:auto;transition:transform .6s ease}
+.car-card:hover .shot img{transform:scale(1.03)}
+.car-body{padding:26px 28px 30px;display:flex;flex-direction:column;gap:12px;flex:1}
+.car-body .kicker{font-size:12px;letter-spacing:.24em;text-transform:uppercase;font-weight:700;color:var(--pink-deep)}
+.car-body h3{font-size:clamp(26px,3.2vw,38px);font-weight:800;letter-spacing:-.02em}
+.car-body p{font-size:16px;line-height:1.55;opacity:.85;flex:1}
+.car-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:6px}
+.btn{
+  display:inline-flex;align-items:center;gap:8px;text-decoration:none;
+  font-weight:700;font-size:14px;text-transform:lowercase;
+  border:2px solid var(--ink);border-radius:999px;padding:11px 22px;
+  background:var(--card);color:var(--ink);
+  transition:background .25s,color .25s;will-change:transform;
+}
+.btn.primary{background:var(--ink);color:var(--cream)}
+.btn:hover{background:var(--pink-deep);border-color:var(--pink-deep);color:#fff}
+.btn.primary:hover{background:var(--pink-deep)}
+.car-nav{display:flex;gap:10px;justify-content:flex-end;margin-top:6px}
+.car-btn{
+  width:52px;height:52px;border-radius:50%;border:2px solid var(--ink);
+  background:var(--card);color:var(--ink);font-size:20px;font-weight:700;
+  display:grid;place-items:center;transition:background .25s,color .25s;
+}
+.car-btn:hover{background:var(--ink);color:var(--cream)}
+.car-btn:disabled{opacity:.35;pointer-events:none}
+@media (max-width:640px){.car-card{flex-basis:86vw}}
+
+/* blog card variant */
+.car-card.blog .shot{background:var(--sage)}
+
+/* ---------- links ---------- */
+.links-sec .big-links{display:flex;flex-direction:column;gap:0;border-top:2px solid var(--ink)}
+.big-link{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:clamp(22px,3.4vw,38px) 6px;border-bottom:2px solid var(--ink);
+  text-decoration:none;font-weight:800;text-transform:lowercase;
+  font-size:clamp(30px,5.4vw,64px);letter-spacing:-.02em;
+  transition:padding-left .3s,color .3s;position:relative;
+}
+.big-link .arrow{font-size:.6em;transition:transform .3s}
+.big-link:hover{padding-left:26px;color:var(--pink-deep)}
+.big-link:hover .arrow{transform:translateX(8px) rotate(-45deg)}
+.big-link small{font-size:13px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;opacity:.55;margin-left:auto;margin-right:26px;align-self:center}
+@media (max-width:640px){.big-link small{display:none}}
+
+/* ---------- footer ---------- */
+footer{
+  padding:70px var(--pad) 46px;text-align:center;position:relative;
+}
+footer .script{font-size:clamp(26px,3.4vw,42px);color:var(--pink-deep);transform:rotate(-2deg);display:inline-block}
+footer p{margin-top:16px;font-size:13px;opacity:.6;letter-spacing:.06em}
+
+/* static mode for verification */
+html.static .reveal{opacity:1;transform:none;transition:none}
+</style>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+
+<div class="cursor-dot" aria-hidden="true"></div>
+<div class="cursor-ring" aria-hidden="true"></div>
+
+<nav>
+  <div class="logo">angela <span>✳</span></div>
+  <div class="links">
+    <a href="#about">about</a>
+    <a href="#projects">projects</a>
+    <a href="#links">find me</a>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="top">
+  <div class="blob blob-1" data-parallax="0.05"></div>
+  <div class="blob blob-2" data-parallax="-0.04"></div>
+  <div class="blob blob-3" data-parallax="0.08"></div>
+
+  <div class="doodle floaty" style="top:14%;right:12%;width:64px;height:64px">
+    <svg viewBox="0 0 64 64"><path d="M32 8 L38 26 L56 32 L38 38 L32 56 L26 38 L8 32 L26 26 Z" fill="none" stroke="#7C2D2D" stroke-width="2.5" stroke-linejoin="round"/></svg>
+  </div>
+  <div class="doodle spin-slow" style="bottom:22%;right:26%;width:56px;height:56px">
+    <svg viewBox="0 0 56 56"><path d="M28 4v48M4 28h48M11 11l34 34M45 11L11 45" stroke="#C9A87C" stroke-width="3" stroke-linecap="round"/></svg>
+  </div>
+  <div class="doodle" style="top:24%;left:6%;width:80px;height:40px">
+    <svg viewBox="0 0 80 40"><path d="M4 30 Q 20 6, 40 24 T 76 14" fill="none" stroke="#A8B09A" stroke-width="3" stroke-linecap="round"/></svg>
+  </div>
+
+  <div class="hero-inner">
+    <span class="script script-hello">hi, i'm</span>
+    <h1 class="display">angela <span style="color:var(--tan)">✳</span></h1>
+    <div class="hero-sub">
+      <span>16, singapore. i build things for the internet.</span>
+      <span class="tag">student</span>
+      <span class="tag">builder</span>
+      <span class="tag">matcha-fuelled</span>
+    </div>
+  </div>
+  <div class="scroll-hint">scroll ↓</div>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="track">
+      <span>exam dashboard</span><span class="heart">·</span><span>food science</span><span class="heart">·</span><span>o-levels survivor</span><span class="heart">·</span><span>stanford dreamer</span><span class="heart">·</span><span>singapore</span><span class="heart">·</span><span>build &gt; complain</span><span class="heart">·</span>
+      <span>exam dashboard</span><span class="heart">·</span><span>food science</span><span class="heart">·</span><span>o-levels survivor</span><span class="heart">·</span><span>stanford dreamer</span><span class="heart">·</span><span>singapore</span><span class="heart">·</span><span>build &gt; complain</span><span class="heart">·</span>
+    </div>
+  </div>
+</header>
+
+<!-- ============ ABOUT ============ -->
+<section id="about">
+  <div class="sec-head reveal">
+    <span class="script">a bit about me</span>
+    <h2 class="display">the short version</h2>
+  </div>
+  <div class="about-grid">
+    <div class="about-copy">
+      <p class="reveal" style="--d:.05s">i'm a year 4 student in singapore who'd rather <span class="hl">build the tool</span> than complain the tool doesn't exist.</p>
+      <p class="reveal" style="--d:.12s">when exam season got chaotic, i made a dashboard for it - now <span class="hl">my whole year uses it</span>. when food science felt gatekept by textbooks, i started a blog about it.</p>
+      <p class="reveal" style="--d:.19s">next stop: <span class="script">somewhere with better wifi and bigger ideas.</span></p>
+    </div>
+    <div class="about-side">
+    <figure class="polaroid reveal" style="--d:.1s" id="photoSlot">
+      <svg class="clip" viewBox="0 0 24 52" fill="none" stroke="#8A8378" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M7 48 V12 a5 5 0 0 1 10 0 V42 a3.5 3.5 0 0 1 -7 0 V16"/></svg>
+      <img src="assets/about-polaroid.jpg" alt="doodle flat-lay of angela's life: laptop, matcha, exam papers and headphones" loading="lazy">
+      <figcaption class="script">me, in doodle form</figcaption>
+    </figure>
+    <div class="about-card reveal" style="--d:.15s">
+      <div class="tape"></div>
+      <h3>quick facts</h3>
+      <ul>
+        <li><b>age</b><span>16</span></li>
+        <li><b>based</b><span>singapore</span></li>
+        <li><b>currently</b><span>surviving o-levels</span></li>
+        <li><b>shipping</b><span>exam dashboard</span></li>
+        <li><b>writing</b><span>the big back club</span></li>
+        <li><b>dreaming</b><span>stanford + ai</span></li>
+      </ul>
+    </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROJECTS ============ -->
+<section class="projects" id="projects">
+  <div class="sec-head reveal">
+    <span class="script">the goods</span>
+    <h2 class="display">stuff i made</h2>
+  </div>
+
+  <div class="carousel reveal" style="--d:.1s">
+    <div class="car-track" id="carTrack">
+
+      <article class="car-card">
+        <div class="shot">
+          <img src="assets/exam-dashboard.png" alt="exam dashboard homepage - live demo with countdowns and syllabus trackers" loading="lazy">
+        </div>
+        <div class="car-body">
+          <div class="kicker">★ feature project</div>
+          <h3>exam dashboard</h3>
+          <p>exam countdowns, syllabus checklists, study tracking and focus sessions - all in one place. built it for myself, now ~30 of my schoolmates use it for our o-levels. real auth, cloud sync, works on any device.</p>
+          <div class="car-actions">
+            <a class="btn primary magnet" href="https://lormaigai.github.io/exam-dashboard/" target="_blank" rel="noopener">visit the site ↗</a>
+            <a class="btn magnet" href="https://github.com/lormaigai/exam-dashboard" target="_blank" rel="noopener">github ↗</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="car-card blog">
+        <div class="shot">
+          <img src="assets/blog-cover.jpg" alt="hand-drawn doodles of baking and food science bits from the big back club" loading="lazy">
+        </div>
+        <div class="car-body">
+          <div class="kicker">✳ the blog</div>
+          <h3>the big back club</h3>
+          <p>food science, without the boring bits. why onions make you cry, what salt is actually doing, why your cookies spread. 17 posts, one subscriber base, zero textbooks.</p>
+          <div class="car-actions">
+            <a class="btn primary magnet" href="https://foodie020.wordpress.com" target="_blank" rel="noopener">read the blog ↗</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="car-card blog">
+        <div class="shot">
+          <img src="assets/site-cover.jpg" alt="doodle of a retro computer with a smiling browser window" loading="lazy">
+        </div>
+        <div class="car-body">
+          <div class="kicker">✳ project 003</div>
+          <h3>you're looking at it</h3>
+          <p>scroll animations, a carousel, a marquee that never sleeps. hand-built html/css/js - no template, no framework, no mercy. more projects loading into this slot soon.</p>
+          <div class="car-actions">
+            <a class="btn magnet" href="https://github.com/lormaigai" target="_blank" rel="noopener">more on github ↗</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+    <div class="car-nav">
+      <button class="car-btn" id="carPrev" aria-label="previous project">←</button>
+      <button class="car-btn" id="carNext" aria-label="next project">→</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LINKS ============ -->
+<section class="links-sec" id="links">
+  <div class="sec-head reveal">
+    <span class="script">say hi</span>
+    <h2 class="display">find me</h2>
+  </div>
+  <div class="big-links">
+    <a class="big-link reveal" style="--d:.05s" href="https://www.linkedin.com/in/angela-hon-ab539140b/" target="_blank" rel="noopener">
+      linkedin <small>the professional-ish one</small> <span class="arrow">→</span>
+    </a>
+    <a class="big-link reveal" style="--d:.12s" href="https://x.com/angelahmxx" target="_blank" rel="noopener">
+      twitter / x <small>the unfiltered one</small> <span class="arrow">→</span>
+    </a>
+    <a class="big-link reveal" style="--d:.19s" href="https://github.com/lormaigai" target="_blank" rel="noopener">
+      github <small>where the code lives</small> <span class="arrow">→</span>
+    </a>
+  </div>
+</section>
+
+<footer>
+  <span class="script">that's a wrap</span>
+  <p>handmade by angela · singapore · © 2026 · cream, burgundy &amp; too much matcha</p>
+</footer>
+
+<script>
+(function(){
+  var fine = window.matchMedia('(pointer:fine)').matches;
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* static mode: ?static renders everything immediately (for screenshots) */
+  if (location.search.indexOf('static') !== -1) {
+    document.documentElement.classList.add('static');
+    window.addEventListener('load', function(){
+      var m = location.search.match(/y=(\d+)/);
+      document.title = 'H=' + document.body.scrollHeight;
+      if (m) {
+        var y = parseInt(m[1], 10);
+        document.body.style.marginTop = (-y) + 'px';
+        var nav = document.querySelector('nav'); if (nav && y > 0) nav.style.display = 'none';
+      }
+    });
+  }
+
+  /* ---- scroll reveals ---- */
+  if (!reduced) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, {threshold: .12});
+    document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+  } else {
+    document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in'); });
+  }
+
+  /* ---- custom cursor + magnetic buttons ---- */
+  if (fine && !reduced) {
+    var dot = document.querySelector('.cursor-dot');
+    var ring = document.querySelector('.cursor-ring');
+    var mx = -100, my = -100, rx = -100, ry = -100;
+    document.addEventListener('mousemove', function(e){ mx = e.clientX; my = e.clientY; });
+    (function loop(){
+      rx += (mx - rx) * .16; ry += (my - ry) * .16;
+      dot.style.transform = 'translate(' + (mx-4) + 'px,' + (my-4) + 'px)';
+      ring.style.transform = 'translate(' + (rx-17) + 'px,' + (ry-17) + 'px)';
+      requestAnimationFrame(loop);
+    })();
+    document.querySelectorAll('a,button').forEach(function(el){
+      el.addEventListener('mouseenter', function(){ document.body.classList.add('link-hover'); });
+      el.addEventListener('mouseleave', function(){ document.body.classList.remove('link-hover'); });
+    });
+    document.querySelectorAll('.magnet').forEach(function(el){
+      el.addEventListener('mousemove', function(e){
+        var r = el.getBoundingClientRect();
+        var dx = e.clientX - (r.left + r.width/2);
+        var dy = e.clientY - (r.top + r.height/2);
+        el.style.transform = 'translate(' + dx*.18 + 'px,' + dy*.28 + 'px)';
+      });
+      el.addEventListener('mouseleave', function(){ el.style.transform = ''; });
+    });
+  } else {
+    var cd = document.querySelector('.cursor-dot'); if (cd) cd.style.display = 'none';
+    var cr = document.querySelector('.cursor-ring'); if (cr) cr.style.display = 'none';
+    document.body.style.cursor = 'auto';
+    document.querySelectorAll('a,button').forEach(function(el){ el.style.cursor = 'pointer'; });
+  }
+
+  /* ---- hero parallax ---- */
+  if (fine && !reduced) {
+    var blobs = document.querySelectorAll('[data-parallax]');
+    window.addEventListener('scroll', function(){
+      var y = window.scrollY;
+      blobs.forEach(function(b){
+        b.style.marginTop = (y * parseFloat(b.dataset.parallax)) + 'px';
+      });
+    }, {passive:true});
+  }
+
+  /* ---- carousel ---- */
+  var track = document.getElementById('carTrack');
+  var prev = document.getElementById('carPrev');
+  var next = document.getElementById('carNext');
+  function step(){ var card = track.querySelector('.car-card'); return card ? card.offsetWidth + 24 : 400; }
+  function update(){
+    prev.disabled = track.scrollLeft <= 4;
+    next.disabled = track.scrollLeft >= track.scrollWidth - track.clientWidth - 4;
+  }
+  prev.addEventListener('click', function(){ track.scrollBy({left:-step(), behavior:'smooth'}); });
+  next.addEventListener('click', function(){ track.scrollBy({left: step(), behavior:'smooth'}); });
+  track.addEventListener('scroll', update, {passive:true});
+  window.addEventListener('resize', update);
+  update();
+})();
+</script>
+</body>
+</html>
