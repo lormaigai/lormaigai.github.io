@@ -49,6 +49,15 @@ body.link-hover .cursor-ring{width:56px;height:56px;opacity:.9}
 .display{font-weight:800;letter-spacing:-.01em;line-height:.95;text-transform:uppercase;font-variation-settings:"opsz" 144}
 .eyebrow{font-size:12px;letter-spacing:.28em;text-transform:uppercase;font-weight:600;opacity:.65}
 
+/* ---------- hero typing caret ---------- */
+#typeCursor{display:inline-block;width:.055em;height:.82em;background:var(--pink-deep);margin-left:.05em;vertical-align:-.06em;animation:caretBlink 1s steps(1) infinite}
+@keyframes caretBlink{50%{opacity:0}}
+#typeCursor.done{animation:none;transition:opacity .5s ease;opacity:0}
+#typeCursor.hold{animation:none}
+#heroStar{opacity:0;transition:opacity .6s ease}
+#heroStar.on{opacity:1}
+.bloglink{color:var(--pink-deep);text-decoration:underline;text-underline-offset:4px}
+
 /* ---------- doodles ---------- */
 .doodle{position:absolute;pointer-events:none;z-index:1}
 .doodle svg{display:block;width:100%;height:100%;overflow:visible}
@@ -276,20 +285,17 @@ html.static .reveal{opacity:1;transform:none;transition:none}
 
   <div class="hero-inner">
     <span class="script script-hello">hi, i'm</span>
-    <h1 class="display">angela <span style="color:var(--tan)">✳</span></h1>
+    <h1 class="display"><span id="typeTarget" data-text="angela"></span><span id="typeCursor" aria-hidden="true"></span> <span id="heroStar" style="color:var(--tan)">✳</span></h1>
     <div class="hero-sub">
       <span>16, singapore. i build things for the internet.</span>
-      <span class="tag">student</span>
-      <span class="tag">builder</span>
-      <span class="tag">matcha-fuelled</span>
     </div>
   </div>
   <div class="scroll-hint">scroll ↓</div>
 
   <div class="marquee" aria-hidden="true">
     <div class="track">
-      <span>exam dashboard</span><span class="heart">·</span><span>food science</span><span class="heart">·</span><span>o-levels survivor</span><span class="heart">·</span><span>stanford dreamer</span><span class="heart">·</span><span>singapore</span><span class="heart">·</span><span>build &gt; complain</span><span class="heart">·</span>
-      <span>exam dashboard</span><span class="heart">·</span><span>food science</span><span class="heart">·</span><span>o-levels survivor</span><span class="heart">·</span><span>stanford dreamer</span><span class="heart">·</span><span>singapore</span><span class="heart">·</span><span>build &gt; complain</span><span class="heart">·</span>
+      <span>exam dashboard</span><span class="heart">·</span><span>food science</span><span class="heart">·</span><span>tri-lingual</span><span class="heart">·</span><span>singapore</span><span class="heart">·</span><span>build &gt; complain</span><span class="heart">·</span>
+      <span>exam dashboard</span><span class="heart">·</span><span>food science</span><span class="heart">·</span><span>tri-lingual</span><span class="heart">·</span><span>singapore</span><span class="heart">·</span><span>build &gt; complain</span><span class="heart">·</span>
     </div>
   </div>
 </header>
@@ -302,9 +308,9 @@ html.static .reveal{opacity:1;transform:none;transition:none}
   </div>
   <div class="about-grid">
     <div class="about-copy">
-      <p class="reveal" style="--d:.05s">i'm a year 4 student in singapore who'd rather <span class="hl">build the tool</span> than complain the tool doesn't exist.</p>
-      <p class="reveal" style="--d:.12s">when exam season got chaotic, i made a dashboard for it - now <span class="hl">my whole year uses it</span>. when food science felt gatekept by textbooks, i started a blog about it.</p>
-      <p class="reveal" style="--d:.19s">next stop: <span class="script">somewhere with better wifi and bigger ideas.</span></p>
+      <p class="reveal" style="--d:.05s">i'm a year 4 student in singapore who loves building <span class="hl">useful (and not-so-useful) projects</span></p>
+      <p class="reveal" style="--d:.12s">hobbies include <span class="hl">making food and mistakes</span></p>
+      <p class="reveal" style="--d:.19s">self-certified foodie: activities include cooking, baking, <span class="script">writing about food <a class="bloglink" href="https://foodie020.wordpress.com" target="_blank" rel="noopener">@thebigbackclub</a></span></p>
     </div>
     <div class="about-side">
     <figure class="polaroid reveal" style="--d:.1s" id="photoSlot">
@@ -318,10 +324,10 @@ html.static .reveal{opacity:1;transform:none;transition:none}
       <ul>
         <li><b>age</b><span>16</span></li>
         <li><b>based</b><span>singapore</span></li>
-        <li><b>currently</b><span>surviving o-levels</span></li>
+        <li><b>currently</b><span>in rgs, year 4</span></li>
         <li><b>shipping</b><span>exam dashboard</span></li>
         <li><b>writing</b><span>the big back club</span></li>
-        <li><b>dreaming</b><span>stanford + ai</span></li>
+        <li><b>speaks</b><span>english · chinese · spanish</span></li>
       </ul>
     </div>
     </div>
@@ -345,7 +351,7 @@ html.static .reveal{opacity:1;transform:none;transition:none}
         <div class="car-body">
           <div class="kicker">★ feature project</div>
           <h3>exam dashboard</h3>
-          <p>exam countdowns, syllabus checklists, study tracking and focus sessions - all in one place. built it for myself, now ~30 of my schoolmates use it for our o-levels. real auth, cloud sync, works on any device.</p>
+          <p>exam countdowns, syllabus checklists, study tracking and focus sessions - all in one place. built it for myself, now ~30 of my schoolmates use it every exam season. real auth, cloud sync, works on any device.</p>
           <div class="car-actions">
             <a class="btn primary magnet" href="https://lormaigai.github.io/exam-dashboard/" target="_blank" rel="noopener">visit the site ↗</a>
             <a class="btn magnet" href="https://github.com/lormaigai/exam-dashboard" target="_blank" rel="noopener">github ↗</a>
@@ -431,6 +437,35 @@ html.static .reveal{opacity:1;transform:none;transition:none}
       }
     });
   }
+
+  /* ---- hero typing effect ---- */
+  (function(){
+    var t = document.getElementById('typeTarget');
+    if (!t) return;
+    var txt = t.getAttribute('data-text') || '';
+    var cur = document.getElementById('typeCursor');
+    var star = document.getElementById('heroStar');
+    var mType = location.search.match(/typeto=(\d+)/);
+    var isStatic = location.search.indexOf('static') !== -1;
+    function finish(){ t.textContent = txt; if (cur) cur.style.display = 'none'; if (star) star.classList.add('on'); }
+    if (reduced || (isStatic && !mType)) { finish(); return; }
+    if (mType) {
+      var n = Math.min(parseInt(mType[1], 10), txt.length);
+      if (n >= txt.length) { finish(); return; }
+      t.textContent = txt.slice(0, n);
+      if (cur) cur.classList.add('hold');
+      return;
+    }
+    var i = 0;
+    setTimeout(function tick(){
+      t.textContent = txt.slice(0, ++i);
+      if (i < txt.length) { setTimeout(tick, 130 + Math.random() * 90); }
+      else {
+        if (star) star.classList.add('on');
+        setTimeout(function(){ if (cur) cur.classList.add('done'); }, 1600);
+      }
+    }, 500);
+  })();
 
   /* ---- scroll reveals ---- */
   if (!reduced) {
