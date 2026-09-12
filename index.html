@@ -58,6 +58,13 @@ body.link-hover .cursor-ring{width:56px;height:56px;opacity:.9}
 #heroStar.on{opacity:1}
 .bloglink{color:var(--pink-deep);text-decoration:underline;text-underline-offset:4px}
 
+/* ---------- motion extras ---------- */
+.marquee:hover .track{animation-play-state:paused}
+.progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--pink-deep);z-index:3000;pointer-events:none}
+@media (pointer:coarse){.progress{display:none}}
+.polaroid{transition:transform .5s cubic-bezier(.2,.65,.3,1)}
+.polaroid:hover{transform:rotate(0deg) scale(1.03)}
+
 /* ---------- doodles ---------- */
 .doodle{position:absolute;pointer-events:none;z-index:1}
 .doodle svg{display:block;width:100%;height:100%;overflow:visible}
@@ -288,6 +295,7 @@ html.static .reveal{opacity:1;transform:none;transition:none}
 </head>
 <body>
 <div class="grain" aria-hidden="true"></div>
+<div class="progress" aria-hidden="true"></div>
 
 <div class="cursor-dot" aria-hidden="true"></div>
 <div class="cursor-ring" aria-hidden="true"></div>
@@ -307,17 +315,17 @@ html.static .reveal{opacity:1;transform:none;transition:none}
   <div class="blob blob-2" data-parallax="-0.04"></div>
   <div class="blob blob-3" data-parallax="0.08"></div>
 
-  <div class="doodle floaty" style="top:14%;right:12%;width:64px;height:64px">
+  <div class="doodle floaty" data-parallax="0.06" style="top:14%;right:12%;width:64px;height:64px">
     <svg viewBox="0 0 64 64"><path d="M32 8 L38 26 L56 32 L38 38 L32 56 L26 38 L8 32 L26 26 Z" fill="none" stroke="#7C2D2D" stroke-width="2.5" stroke-linejoin="round"/></svg>
   </div>
-  <div class="doodle spin-slow" style="bottom:22%;right:26%;width:56px;height:56px">
+  <div class="doodle spin-slow" data-parallax="-0.05" style="bottom:22%;right:26%;width:56px;height:56px">
     <svg viewBox="0 0 56 56"><path d="M28 4v48M4 28h48M11 11l34 34M45 11L11 45" stroke="#C9A87C" stroke-width="3" stroke-linecap="round"/></svg>
   </div>
-  <div class="doodle" style="top:24%;left:6%;width:80px;height:40px">
+  <div class="doodle" data-parallax="0.04" style="top:24%;left:6%;width:80px;height:40px">
     <svg viewBox="0 0 80 40"><path d="M4 30 Q 20 6, 40 24 T 76 14" fill="none" stroke="#A8B09A" stroke-width="3" stroke-linecap="round"/></svg>
   </div>
 
-  <div class="hero-inner">
+  <div class="hero-inner" data-parallax="0.14" data-fade="620">
     <span class="script script-hello">hi, i'm</span>
     <h1 class="display"><span id="typeTarget" data-text="angela"></span><span id="typeCursor" aria-hidden="true"></span> <span id="heroStar" style="color:var(--tan)">✳</span></h1>
   </div>
@@ -337,7 +345,7 @@ html.static .reveal{opacity:1;transform:none;transition:none}
     <span class="script">a bit about me</span>
     <h2 class="display reveal mask" style="--d:.05s">the short version</h2>
     <svg class="squig reveal draw" style="--d:.25s" viewBox="0 0 220 16" aria-hidden="true"><path pathLength="1" d="M4 11 Q 58 2 110 9 T 216 7" fill="none" stroke="#7C2D2D" stroke-width="3.5" stroke-linecap="round"/></svg>
-    <svg class="headstar reveal spin-in" style="--d:.35s" viewBox="0 0 56 56" aria-hidden="true"><path d="M28 4v48M4 28h48M11 11l34 34M45 11L11 45" stroke="#C9A87C" stroke-width="3" stroke-linecap="round"/></svg>
+    <svg class="headstar reveal spin-in" data-parallax="0.06" style="--d:.35s" viewBox="0 0 56 56" aria-hidden="true"><path d="M28 4v48M4 28h48M11 11l34 34M45 11L11 45" stroke="#C9A87C" stroke-width="3" stroke-linecap="round"/></svg>
   </div>
   <div class="about-grid">
     <div class="about-copy">
@@ -370,10 +378,10 @@ html.static .reveal{opacity:1;transform:none;transition:none}
 <!-- ============ PROJECTS ============ -->
 <section class="projects" id="projects">
   <div class="sec-head reveal">
-    <span class="script">the goods</span>
-    <h2 class="display reveal mask" style="--d:.05s">stuff i made</h2>
+    <span class="script">stuff i made</span>
+    <h2 class="display reveal mask" style="--d:.05s">projects</h2>
     <svg class="squig reveal draw" style="--d:.25s" viewBox="0 0 220 16" aria-hidden="true"><path pathLength="1" d="M4 11 Q 58 2 110 9 T 216 7" fill="none" stroke="#7C2D2D" stroke-width="3.5" stroke-linecap="round"/></svg>
-    <svg class="headstar reveal spin-in" style="--d:.35s" viewBox="0 0 56 56" aria-hidden="true"><path d="M28 4v48M4 28h48M11 11l34 34M45 11L11 45" stroke="#C9A87C" stroke-width="3" stroke-linecap="round"/></svg>
+    <svg class="headstar reveal spin-in" data-parallax="0.06" style="--d:.35s" viewBox="0 0 56 56" aria-hidden="true"><path d="M28 4v48M4 28h48M11 11l34 34M45 11L11 45" stroke="#C9A87C" stroke-width="3" stroke-linecap="round"/></svg>
   </div>
 
   <div class="carousel reveal" style="--d:.1s">
@@ -408,12 +416,26 @@ html.static .reveal{opacity:1;transform:none;transition:none}
         </div>
       </article>
 
+      <article class="car-card reveal zoom">
+        <div class="shot">
+          <img src="assets/koffee-kitty.jpg" alt="doodle of a cat curled around a cup of coffee, with a moka pot and coffee beans" loading="lazy">
+        </div>
+        <div class="car-body">
+          <div class="kicker">✳ side project</div>
+          <h3>koffee kitty</h3>
+          <p>a caffeine optimiser and tracker - maximum efficiency, minimum coffee.</p>
+          <div class="car-actions">
+            <a class="btn primary magnet" href="https://github.com/lormaigai/Koffee-Kitty" target="_blank" rel="noopener">github ↗</a>
+          </div>
+        </div>
+      </article>
+
       <article class="car-card blog">
         <div class="shot">
           <img src="assets/site-cover.jpg" alt="doodle of a retro computer with a smiling browser window" loading="lazy">
         </div>
         <div class="car-body">
-          <div class="kicker">✳ project 003</div>
+          <div class="kicker">✳ this site</div>
           <h3>you're looking at it</h3>
           <p>scroll animations, a carousel, a marquee that never sleeps. hand-built html/css/js - no template, no framework, no mercy. more projects loading into this slot soon.</p>
           <div class="car-actions">
@@ -436,7 +458,7 @@ html.static .reveal{opacity:1;transform:none;transition:none}
     <span class="script">say hi</span>
     <h2 class="display reveal mask" style="--d:.05s">find me</h2>
     <svg class="squig reveal draw" style="--d:.25s" viewBox="0 0 220 16" aria-hidden="true"><path pathLength="1" d="M4 11 Q 58 2 110 9 T 216 7" fill="none" stroke="#7C2D2D" stroke-width="3.5" stroke-linecap="round"/></svg>
-    <svg class="headstar reveal spin-in" style="--d:.35s" viewBox="0 0 56 56" aria-hidden="true"><path d="M28 4v48M4 28h48M11 11l34 34M45 11L11 45" stroke="#C9A87C" stroke-width="3" stroke-linecap="round"/></svg>
+    <svg class="headstar reveal spin-in" data-parallax="0.06" style="--d:.35s" viewBox="0 0 56 56" aria-hidden="true"><path d="M28 4v48M4 28h48M11 11l34 34M45 11L11 45" stroke="#C9A87C" stroke-width="3" stroke-linecap="round"/></svg>
   </div>
   <div class="big-links">
     <a class="big-link reveal rl" style="--d:.05s" href="https://www.linkedin.com/in/angela-hon-ab539140b/" target="_blank" rel="noopener">
@@ -528,7 +550,7 @@ html.static .reveal{opacity:1;transform:none;transition:none}
       ring.style.transform = 'translate(' + (rx-17) + 'px,' + (ry-17) + 'px)';
       requestAnimationFrame(loop);
     })();
-    document.querySelectorAll('a,button').forEach(function(el){
+    document.querySelectorAll('a,button,.car-card,.polaroid').forEach(function(el){
       el.addEventListener('mouseenter', function(){ document.body.classList.add('link-hover'); });
       el.addEventListener('mouseleave', function(){ document.body.classList.remove('link-hover'); });
     });
@@ -551,11 +573,20 @@ html.static .reveal{opacity:1;transform:none;transition:none}
   /* ---- hero parallax ---- */
   if (fine && !reduced) {
     var blobs = document.querySelectorAll('[data-parallax]');
+    var faders = document.querySelectorAll('[data-fade]');
+    var prog = document.querySelector('.progress');
     window.addEventListener('scroll', function(){
       var y = window.scrollY;
       blobs.forEach(function(b){
         b.style.marginTop = (y * parseFloat(b.dataset.parallax)) + 'px';
       });
+      faders.forEach(function(f){
+        f.style.opacity = Math.max(0, 1 - y / parseFloat(f.dataset.fade));
+      });
+      if (prog) {
+        var h = document.documentElement.scrollHeight - window.innerHeight;
+        prog.style.width = (h > 0 ? (y / h) * 100 : 0) + '%';
+      }
     }, {passive:true});
   }
 
