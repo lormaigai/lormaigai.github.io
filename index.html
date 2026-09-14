@@ -65,6 +65,21 @@ body.link-hover .cursor-ring{width:56px;height:56px;opacity:.9}
 .polaroid{transition:transform .5s cubic-bezier(.2,.65,.3,1)}
 .polaroid:hover{transform:rotate(0deg) scale(1.03)}
 
+/* ---------- motion pack 2 ---------- */
+nav{border-bottom:2px solid transparent;transition:background .3s,padding .3s,border-color .3s}
+nav.scrolled{background:var(--cream);border-bottom-color:var(--ink);mix-blend-mode:normal;padding-top:12px;padding-bottom:12px}
+nav .links a.active::after{width:100%}
+.scroll-hint{animation:hintFloat 2.4s ease-in-out infinite}
+@keyframes hintFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+.scrub-word{transition:opacity .3s ease}
+.big-link .lt{display:inline-block;opacity:0;transform:translateY(.45em);transition:opacity .5s ease,transform .55s cubic-bezier(.2,.65,.3,1);transition-delay:calc(var(--i)*22ms)}
+.big-link.in .lt{opacity:1;transform:none}
+html.static .big-link .lt{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  .scroll-hint{animation:none}
+  .big-link .lt{opacity:1;transform:none}
+}
+
 /* ---------- doodles ---------- */
 .doodle{position:absolute;pointer-events:none;z-index:1}
 .doodle svg{display:block;width:100%;height:100%;overflow:visible}
@@ -349,9 +364,9 @@ html.static .reveal{opacity:1;transform:none;transition:none}
   </div>
   <div class="about-grid">
     <div class="about-copy">
-      <p class="reveal" style="--d:.05s">i'm a year 4 student in singapore who loves building <span class="hl">useful (and not-so-useful) projects</span></p>
+      <p class="reveal scrub" style="--d:.05s">i'm a year 4 student in singapore who loves building <span class="hl">useful (and not-so-useful) projects</span></p>
       <p class="reveal" style="--d:.12s">hobbies include <span class="hl">making food and mistakes</span></p>
-      <p class="reveal" style="--d:.19s">self-certified foodie: activities include cooking, baking, <span class="script">writing about food <a class="bloglink" href="https://foodie020.wordpress.com" target="_blank" rel="noopener">@thebigbackclub</a></span></p>
+      <p class="reveal" style="--d:.19s">self-certified foodie: activities include cooking, baking, <span class="script">writing about food <a class="bloglink" href="https://thebigbackclub.wordpress.com/" target="_blank" rel="noopener">@thebigbackclub</a></span></p>
     </div>
     <div class="about-side">
     <figure class="polaroid reveal rr" style="--d:.1s" id="photoSlot">
@@ -411,7 +426,7 @@ html.static .reveal{opacity:1;transform:none;transition:none}
           <h3>the big back club</h3>
           <p>where food meets science. check it out here.</p>
           <div class="car-actions">
-            <a class="btn primary magnet" href="https://foodie020.wordpress.com" target="_blank" rel="noopener">read the blog ↗</a>
+            <a class="btn primary magnet" href="https://thebigbackclub.wordpress.com/" target="_blank" rel="noopener">read the blog ↗</a>
           </div>
         </div>
       </article>
@@ -588,6 +603,104 @@ html.static .reveal{opacity:1;transform:none;transition:none}
         prog.style.width = (h > 0 ? (y / h) * 100 : 0) + '%';
       }
     }, {passive:true});
+  }
+
+  /* ---- big-link letters stagger in on scroll ---- */
+  document.querySelectorAll('.big-link').forEach(function(link){
+    var tn = link.firstChild;
+    while (tn && tn.nodeType !== 3) tn = tn.nextSibling;
+    if (!tn) return;
+    var frag = document.createDocumentFragment();
+    var i = 0;
+    tn.textContent.replace(/^\s+/, '').split('').forEach(function(ch){
+      var sp = document.createElement('span');
+      sp.className = 'lt';
+      sp.style.setProperty('--i', i++);
+      sp.textContent = ch === ' ' ? '\u00A0' : ch;
+      frag.appendChild(sp);
+    });
+    link.replaceChild(frag, tn);
+  });
+
+  /* ---- scroll chrome: nav state, scrollspy, word scrub ---- */
+  var isStaticMode = location.search.indexOf('static') !== -1;
+  var navEl = document.querySelector('nav');
+  var navLinks = document.querySelectorAll('nav .links a');
+  var secs = ['about','projects','links'].map(function(id){ return document.getElementById(id); });
+  var scrubEl = document.querySelector('.about-copy p.scrub');
+  var scrubWords = [];
+  if (scrubEl && !reduced && !isStaticMode) {
+    (function splitWords(node){
+      Array.prototype.slice.call(node.childNodes).forEach(function(ch){
+        if (ch.nodeType === 3) {
+          var frag = document.createDocumentFragment();
+          ch.textContent.split(/(\s+)/).forEach(function(part){
+            if (!part) return;
+            if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(part)); return; }
+            var w = document.createElement('span');
+            w.className = 'scrub-word';
+            w.textContent = part;
+            frag.appendChild(w);
+          });
+          node.replaceChild(frag, ch);
+        } else if (ch.nodeType === 1) { splitWords(ch); }
+      });
+    })(scrubEl);
+    scrubWords = scrubEl.querySelectorAll('.scrub-word');
+  }
+  if (!reduced && !isStaticMode) {
+    var onScrollChrome = function(){
+      var y = window.scrollY;
+      if (navEl) navEl.classList.toggle('scrolled', y > 40);
+      var cur = -1, vh = window.innerHeight;
+      secs.forEach(function(sec, i){ if (sec && sec.getBoundingClientRect().top < vh * .35) cur = i; });
+      navLinks.forEach(function(a, i){ a.classList.toggle('active', i === cur); });
+      if (scrubWords.length) {
+        var r = scrubEl.getBoundingClientRect();
+        var p = Math.min(1, Math.max(0, (vh * .82 - r.top) / (vh * .5)));
+        var n = scrubWords.length;
+        scrubWords.forEach(function(w, i){ w.style.opacity = (i / n <= p) ? '1' : '.15'; });
+      }
+    };
+    window.addEventListener('scroll', onScrollChrome, {passive:true});
+    onScrollChrome();
+  }
+
+  /* ---- velocity play: marquee boost + carousel skew ---- */
+  if (!reduced && !isStaticMode) {
+    var mTrack = document.querySelector('.marquee .track');
+    var carT = document.getElementById('carTrack');
+    var half = 0, mx2 = 0, boost = 0, skCur = 0, lastY2 = window.scrollY;
+    var measure = function(){ if (mTrack) half = mTrack.scrollWidth / 2; };
+    if (mTrack) {
+      mTrack.style.animation = 'none';
+      measure();
+      window.addEventListener('resize', measure);
+      window.addEventListener('load', measure);
+    }
+    var lastT = performance.now();
+    (function vLoop(t){
+      var dt = Math.min(64, t - lastT) / 1000; lastT = t;
+      var y = window.scrollY;
+      var dy = y - lastY2; lastY2 = y;
+      boost += dy * 2.2;
+      boost *= Math.pow(.90, dt * 60);
+      if (mTrack && half > 0) {
+        var base = half / 22;
+        var v = Math.max(-base * .8, Math.min(base * 5, base + boost));
+        mx2 -= v * dt;
+        if (mx2 <= -half) mx2 += half;
+        if (mx2 > 0) mx2 -= half;
+        mTrack.style.transform = 'translateX(' + mx2.toFixed(2) + 'px)';
+      }
+      if (carT) {
+        var target = Math.max(-2.2, Math.min(2.2, dy * .05));
+        skCur += (target - skCur) * Math.min(1, dt * 10);
+        if (Math.abs(skCur) < .01) skCur = 0;
+        carT.style.transform = 'skewY(' + skCur.toFixed(3) + 'deg)';
+      }
+      requestAnimationFrame(vLoop);
+    })(lastT);
   }
 
   /* ---- carousel ---- */
