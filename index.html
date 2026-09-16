@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>lormaigai</title>
-<meta name="description" content="angela hon. 16, singapore. i build things for the internet - exam dashboard, the big back club, and whatever is next.">
+<title>Angela</title>
+<meta name="description" content="Angela. Year 4 student in Singapore building useful (and not-so-useful) things for the internet.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
@@ -69,6 +69,9 @@ body.link-hover .cursor-ring{width:56px;height:56px;opacity:.9}
 nav{border-bottom:2px solid transparent;transition:background .3s,padding .3s,border-color .3s}
 nav.scrolled{background:var(--cream);border-bottom-color:var(--ink);mix-blend-mode:normal;padding-top:12px;padding-bottom:12px}
 nav .links a.active::after{width:100%}
+.logo{min-width:7ch}
+.logo .logo-mark{display:inline-block;opacity:0;transform:translateY(5px);transition:opacity .28s ease,transform .28s ease}
+nav.hero-passed .logo-mark{opacity:1;transform:none}
 .scroll-hint{animation:hintFloat 2.4s ease-in-out infinite}
 @keyframes hintFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
 .scrub-word{transition:opacity .3s ease}
@@ -319,7 +322,7 @@ html.static .reveal{opacity:1;transform:none;transition:none}
 <div class="cursor-ring" aria-hidden="true"></div>
 
 <nav>
-  <div class="logo">lormaigai <span>✳</span></div>
+  <div class="logo"><span class="logo-mark">Angela</span></div>
   <div class="links">
     <a href="#about">about</a>
     <a href="#projects">projects</a>
@@ -497,7 +500,7 @@ html.static .reveal{opacity:1;transform:none;transition:none}
 
 <footer>
   <span class="script reveal zoom">that's a wrap</span>
-  <p>handmade by lormaigai · singapore · © 2026 · cream, burgundy &amp; too much matcha</p>
+  <p>handmade by Angela · singapore · © 2026 · cream, burgundy &amp; too much matcha</p>
 </footer>
 
 <script>
@@ -514,7 +517,7 @@ html.static .reveal{opacity:1;transform:none;transition:none}
       if (m) {
         var y = parseInt(m[1], 10);
         document.body.style.marginTop = (-y) + 'px';
-        var nav = document.querySelector('nav'); if (nav && y > 0) nav.style.display = 'none';
+        var nav = document.querySelector('nav'); if (nav && y > 0) nav.classList.add('hero-passed');
       }
     });
   }
@@ -633,6 +636,7 @@ html.static .reveal{opacity:1;transform:none;transition:none}
   var isStaticMode = location.search.indexOf('static') !== -1;
   var navEl = document.querySelector('nav');
   var navLinks = document.querySelectorAll('nav .links a');
+  var heroTitle = document.querySelector('.hero-inner h1');
   var secs = ['about','projects','links'].map(function(id){ return document.getElementById(id); });
   var scrubEl = document.querySelector('.about-copy p.scrub');
   var scrubWords = [];
@@ -655,10 +659,14 @@ html.static .reveal{opacity:1;transform:none;transition:none}
     })(scrubEl);
     scrubWords = scrubEl.querySelectorAll('.scrub-word');
   }
-  if (!reduced && !isStaticMode) {
+  if (!isStaticMode) {
     var onScrollChrome = function(){
       var y = window.scrollY;
-      if (navEl) navEl.classList.toggle('scrolled', y > 40);
+      if (navEl) {
+        navEl.classList.toggle('scrolled', y > 40);
+        var heroPassed = heroTitle && heroTitle.getBoundingClientRect().bottom <= navEl.getBoundingClientRect().bottom;
+        navEl.classList.toggle('hero-passed', !!heroPassed);
+      }
       var cur = -1, vh = window.innerHeight;
       secs.forEach(function(sec, i){ if (sec && sec.getBoundingClientRect().top < vh * .35) cur = i; });
       navLinks.forEach(function(a, i){ a.classList.toggle('active', i === cur); });
