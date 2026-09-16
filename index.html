@@ -252,6 +252,9 @@ html.static .about-card li{opacity:1;transform:none;transition:none}
 }
 .car-card:hover{transform:translateY(-6px) rotate(-.4deg)}
 .car-card .shot{border-bottom:2px solid var(--ink);overflow:hidden;background:#1e2430}
+.car-card .shot a{display:block;line-height:0}
+.car-body h3 a{color:inherit;text-decoration:none}
+.car-body h3 a:hover{color:var(--pink-deep)}
 .car-card .shot img{width:100%;height:auto;transition:transform .6s ease}
 .car-card:hover .shot img{transform:scale(1.03)}
 .car-body{padding:26px 28px 30px;display:flex;flex-direction:column;gap:12px;flex:1}
@@ -404,58 +407,62 @@ html.static .reveal{opacity:1;transform:none;transition:none}
 
       <article class="car-card reveal zoom">
         <div class="shot">
-          <img src="assets/exam-dashboard.png" alt="exam dashboard homepage - live demo with countdowns and syllabus trackers" loading="lazy">
+          <a href="https://lormaigai.github.io/exam-dashboard/" target="_blank" rel="noopener" aria-label="open the exam dashboard live demo">
+            <img src="assets/exam-dashboard.png" alt="exam dashboard homepage - live demo with countdowns and syllabus trackers" loading="lazy">
+          </a>
         </div>
         <div class="car-body">
           <div class="kicker">★ feature project</div>
-          <h3>exam dashboard</h3>
+          <h3><a href="https://lormaigai.github.io/exam-dashboard/" target="_blank" rel="noopener">exam dashboard</a></h3>
           <p>exam countdowns, syllabus checklists, study tracking and focus sessions - all in one place. built it for myself, now ~30 of my schoolmates use it every exam season. real auth, cloud sync, works on any device.</p>
           <div class="car-actions">
-            <a class="btn primary magnet" href="https://lormaigai.github.io/exam-dashboard/" target="_blank" rel="noopener">visit the site ↗</a>
             <a class="btn magnet" href="https://github.com/lormaigai/exam-dashboard" target="_blank" rel="noopener">github ↗</a>
-          </div>
-        </div>
-      </article>
-
-      <article class="car-card blog">
-        <div class="shot">
-          <img src="assets/blog-cover.jpg" alt="hand-drawn doodles of baking and food science bits from the big back club" loading="lazy">
-        </div>
-        <div class="car-body">
-          <div class="kicker">✳ the blog</div>
-          <h3>the big back club</h3>
-          <p>where food meets science. check it out here.</p>
-          <div class="car-actions">
-            <a class="btn primary magnet" href="https://thebigbackclub.wordpress.com/" target="_blank" rel="noopener">read the blog ↗</a>
           </div>
         </div>
       </article>
 
       <article class="car-card reveal zoom">
         <div class="shot">
-          <img src="assets/koffee-kitty.jpg" alt="doodle of a cat curled around a cup of coffee, with a moka pot and coffee beans" loading="lazy">
+          <a href="https://beautiful-belekoy-4e6149.netlify.app/" target="_blank" rel="noopener" aria-label="open the koffee kitty live demo">
+            <img src="assets/koffee-kitty.jpg" alt="doodle of a cat curled around a cup of coffee, with a moka pot and coffee beans" loading="lazy">
+          </a>
         </div>
         <div class="car-body">
           <div class="kicker">✳ side project</div>
-          <h3>koffee kitty</h3>
+          <h3><a href="https://beautiful-belekoy-4e6149.netlify.app/" target="_blank" rel="noopener">koffee kitty</a></h3>
           <p>a caffeine optimiser and tracker - maximum efficiency, minimum coffee.</p>
           <div class="car-actions">
-            <a class="btn primary magnet" href="https://github.com/lormaigai/Koffee-Kitty" target="_blank" rel="noopener">github ↗</a>
+            <a class="btn magnet" href="https://github.com/lormaigai/Koffee-Kitty" target="_blank" rel="noopener">github ↗</a>
           </div>
         </div>
       </article>
 
-      <article class="car-card blog">
+      <article class="car-card reveal zoom">
         <div class="shot">
-          <img src="assets/site-cover.jpg" alt="doodle of a retro computer with a smiling browser window" loading="lazy">
+          <a href="https://lormaigai.github.io/chinese-tutor/" target="_blank" rel="noopener" aria-label="open the chinese tutor live demo">
+            <img src="assets/chinese-tutor.png" alt="chinese tutor daily immersion app with reading practice and vocabulary" loading="lazy">
+          </a>
         </div>
         <div class="car-body">
-          <div class="kicker">✳ this site</div>
-          <h3>you're looking at it</h3>
-          <p>scroll animations, a carousel, a marquee that never sleeps. hand-built html/css/js - no template, no framework, no mercy. more projects loading into this slot soon.</p>
+          <div class="kicker">✳ learning app</div>
+          <h3><a href="https://lormaigai.github.io/chinese-tutor/" target="_blank" rel="noopener">chinese tutor</a></h3>
+          <p>daily chinese immersion through news-linked reading, vocabulary, dictation and oral practice - built for students who want a little practice every day.</p>
           <div class="car-actions">
-            <a class="btn magnet" href="https://github.com/lormaigai" target="_blank" rel="noopener">more on github ↗</a>
+            <a class="btn magnet" href="https://github.com/lormaigai/chinese-tutor" target="_blank" rel="noopener">github ↗</a>
           </div>
+        </div>
+      </article>
+
+      <article class="car-card blog reveal zoom">
+        <div class="shot">
+          <a href="https://thebigbackclub.wordpress.com/" target="_blank" rel="noopener" aria-label="open the big back club food blog">
+            <img src="assets/blog-cover.jpg" alt="hand-drawn doodles of baking and food science bits from the big back club" loading="lazy">
+          </a>
+        </div>
+        <div class="car-body">
+          <div class="kicker">✳ food blog</div>
+          <h3><a href="https://thebigbackclub.wordpress.com/" target="_blank" rel="noopener">the big back club</a></h3>
+          <p>where food meets science. check it out here.</p>
         </div>
       </article>
 
